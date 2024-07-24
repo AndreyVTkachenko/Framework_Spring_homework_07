@@ -37,8 +37,8 @@ public class Application {
 		userRepository.save(user);
 
 		User anonymous = new User();
-		anonymous.setLogin("anon");
-		anonymous.setPassword("$2a$12$tPkyYzWCYUEePUFXUh3scesGuPum1fvFYwm/9UpmWNa52xEeUToRu"); // anon
+		anonymous.setLogin("rest");
+		anonymous.setPassword("$2a$12$ZYAuc1p3j.aO8sKVKV0VOeFmmdv0iQpnVZOAqlhYbR0gofAaxultO"); // rest
 		userRepository.save(anonymous);
 
 		UserRole adminRoleLink = new UserRole();
