@@ -20,17 +20,32 @@ public class Application {
 		RoleRepository roleRepository = ctx.getBean(RoleRepository.class);
 		UserRoleRepository userRoleRepository = ctx.getBean(UserRoleRepository.class);
 
-		// Создаем роли
 		Role adminRole = createRole(roleRepository, "ADMIN");
 		Role userRole = createRole(roleRepository, "USER");
 		Role restRole = createRole(roleRepository, "REST");
 
-		// Создаем пользователей и их роли
-		User admin = createUserWithRoles(userRepository, userRoleRepository, "admin", "$2a$12$LbAPCsHn8ZN5MUDqDmIX7e9n1YlDkCxEt0lW3Q2WuW0M1vteo8jvG", List.of(adminRole, userRole)); // admin
-		User user = createUserWithRoles(userRepository, userRoleRepository, "user", "$2a$12$.dlnBAYq6sOUumn3jtG.AepxdSwGxJ8xA2iAPoCHSH61Vjl.JbIfq", List.of(userRole)); // user
-		User rest = createUserWithRoles(userRepository, userRoleRepository, "rest", "$2a$12$ZYAuc1p3j.aO8sKVKV0VOeFmmdv0iQpnVZOAqlhYbR0gofAaxultO", List.of(restRole)); // rest
+		User admin = createUserWithRoles(
+				userRepository,
+				userRoleRepository,
+				"admin",
+				"$2a$12$LbAPCsHn8ZN5MUDqDmIX7e9n1YlDkCxEt0lW3Q2WuW0M1vteo8jvG",
+				List.of(adminRole, userRole)
+		); // admin
+		User user = createUserWithRoles(
+				userRepository,
+				userRoleRepository,
+				"user",
+				"$2a$12$.dlnBAYq6sOUumn3jtG.AepxdSwGxJ8xA2iAPoCHSH61Vjl.JbIfq",
+				List.of(userRole)
+		); // user
+		User rest = createUserWithRoles(
+				userRepository,
+				userRoleRepository,
+				"rest",
+				"$2a$12$ZYAuc1p3j.aO8sKVKV0VOeFmmdv0iQpnVZOAqlhYbR0gofAaxultO",
+				List.of(restRole)
+		); // rest
 
-		// Создаем проекты
 		ProjectRepository projectRepo = ctx.getBean(ProjectRepository.class);
 		for (int i = 1; i <= 5; i++) {
 			Project project = new Project();
@@ -38,7 +53,6 @@ public class Application {
 			projectRepo.save(project);
 		}
 
-		// Создаем сотрудников
 		EmployeeRepository employeeRepo = ctx.getBean(EmployeeRepository.class);
 		for (int i = 1; i <= 5; i++) {
 			Employee employee = new Employee();
@@ -46,7 +60,6 @@ public class Application {
 			employeeRepo.save(employee);
 		}
 
-		// Создаем таймшиты
 		TimesheetRepository timesheetRepo = ctx.getBean(TimesheetRepository.class);
 		LocalDate createdAt = LocalDate.now();
 		for (int i = 1; i <= 10; i++) {
@@ -68,7 +81,11 @@ public class Application {
 		return roleRepository.save(role);
 	}
 
-	private static User createUserWithRoles(UserRepository userRepository, UserRoleRepository userRoleRepository, String login, String password, List<Role> roles) {
+	private static User createUserWithRoles(
+			UserRepository userRepository,
+			UserRoleRepository userRoleRepository,
+			String login, String password,
+			List<Role> roles) {
 		User user = new User();
 		user.setLogin(login);
 		user.setPassword(password);
