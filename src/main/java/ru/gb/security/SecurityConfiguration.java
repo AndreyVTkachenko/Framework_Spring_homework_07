@@ -25,8 +25,10 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/home/projects/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/home/timesheets/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                        .requestMatchers("/home/projects/**").hasRole("ADMIN")
+                        .requestMatchers("/home/timesheets/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/projects/**").hasAnyRole("ADMIN", "USER", "REST")
+                        .requestMatchers("/timesheets/**").hasAnyRole("ADMIN", "USER", "REST")
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults())
@@ -37,5 +39,4 @@ public class SecurityConfiguration {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

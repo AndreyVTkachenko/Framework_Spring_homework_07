@@ -2,8 +2,9 @@ package ru.gb.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,7 +18,7 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "roleId")
-    private Set<UserRole> userRoles;
-
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    private List<User> users;
 }
